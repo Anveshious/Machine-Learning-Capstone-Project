@@ -58,3 +58,46 @@ X = df.drop('salary', axis=1)  # Features
 y = df['salary']  # Target
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# One-Hot Encoding for job roles, education, etc.
+df = pd.get_dummies(df, columns=['job_role', 'education', 'department'])
+
+from sklearn.model_selection import train_test_split
+
+X = df.drop('salary', axis=1)  # Features
+y = df['salary']  # Target
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Train model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Predict & evaluate
+y_pred = model.predict(X_test)
+rmse = mean_squared_error(y_test, y_pred, squared=False)
+r2 = r2_score(y_test, y_pred)
+
+print(f"RMSE: {rmse:.2f}")
+print(f"R² Score: {r2:.2f}")
+
+from sklearn.ensemble import RandomForestRegressor
+
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+rmse = mean_squared_error(y_test, y_pred, squared=False)
+print(f"RMSE: {rmse:.2f}")
+
+from xgboost import XGBRegressor
+
+model = XGBRegressor()
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+rmse = mean_squared_error(y_test, y_pred, squared=False)
+print(f"RMSE: {rmse:.2f}")
