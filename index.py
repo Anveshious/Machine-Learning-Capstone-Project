@@ -101,3 +101,16 @@ model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 rmse = mean_squared_error(y_test, y_pred, squared=False)
 print(f"RMSE: {rmse:.2f}")
+
+from sklearn.model_selection import GridSearchCV
+
+params = {
+    'n_estimators': [50, 100, 200],
+    'max_depth': [5, 10, 20]
+}
+
+grid_search = GridSearchCV(RandomForestRegressor(), params, cv=5)
+grid_search.fit(X_train, y_train)
+
+best_model = grid_search.best_estimator_
+print(f"Best parameters: {grid_search.best_params_}")
