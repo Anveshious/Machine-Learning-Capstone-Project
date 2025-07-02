@@ -114,3 +114,12 @@ grid_search.fit(X_train, y_train)
 
 best_model = grid_search.best_estimator_
 print(f"Best parameters: {grid_search.best_params_}")
+
+importances = best_model.feature_importances_
+features = X_train.columns
+
+feature_importance = pd.DataFrame({'Feature': features, 'Importance': importances})
+feature_importance = feature_importance.sort_values('Importance', ascending=False)
+
+print(feature_importance.head(10))
+
