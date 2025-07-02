@@ -123,3 +123,25 @@ feature_importance = feature_importance.sort_values('Importance', ascending=Fals
 
 print(feature_importance.head(10))
 
+import joblib
+import pandas as pd
+
+# Load the saved model
+model = joblib.load('salary_predictor.pkl')
+
+# Create new employee data (ADJUST VALUES TO YOUR NEEDS)
+new_employee = {
+    'experience_years': [5],
+    'education': ['Master'],
+    'job_role': ['Data Scientist'],
+    'projects_completed': [7]
+}
+new_employee_data = pd.DataFrame(new_employee)
+
+# Preprocess identically to training data
+new_employee_data = pd.get_dummies(new_employee_data)
+new_employee_data = new_employee_data.reindex(columns=model.feature_names_in_, fill_value=0)
+
+# Predict
+predicted_salary = model.predict(new_employee_data)
+print(f"Predicted Salary: ${predicted_salary[0]:.2f}")
