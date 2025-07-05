@@ -206,3 +206,10 @@ sample_input = {
 
 predicted_ctc = predict_expected_ctc(sample_input)
 print(f"\nPredicted Expected CTC: ₹{predicted_ctc:,.2f} LPA")
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+
+# 1. Clean and prepare education categories
+education_order = sorted(df['Education'].unique())
+df['Education'] = df['Education'].str.strip().str
